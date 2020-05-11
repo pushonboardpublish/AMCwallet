@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.alphawallet.app.C;
 import com.alphawallet.app.entity.CurrencyItem;
+import com.alphawallet.app.entity.PaymentMethodItem;
 
 import java.util.Locale;
 
@@ -23,6 +24,7 @@ public class SharedPreferenceRepository implements PreferenceRepositoryType {
     private static final String FIND_WALLET_ADDRESS_SHOWN = "find_wallet_address_shown";
     private static final String CURRENCY_CODE_KEY = "currency_locale";
     private static final String CURRENCY_SYMBOL_KEY = "currency_symbol";
+    private static final String PAYMENT_METHOD = "payment_method";
 
     private final SharedPreferences pref;
 
@@ -121,5 +123,15 @@ public class SharedPreferenceRepository implements PreferenceRepositoryType {
     @Override
     public String getDefaultCurrency() {
         return pref.getString(CURRENCY_CODE_KEY, C.DEFAULT_CURRENCY_CODE);
+    }
+
+    @Override
+    public void setDefaultPaymentMethod(PaymentMethodItem paymentMethod) {
+        pref.edit().putString(PAYMENT_METHOD, paymentMethod.getCode()).apply();
+    }
+
+    @Override
+    public String getDefaultPaymentMethod() {
+        return pref.getString(PAYMENT_METHOD, "");
     }
 }

@@ -2,6 +2,8 @@ package com.alphawallet.app.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -210,6 +212,16 @@ public class SettingsItemView extends LinearLayout {
             toggle.setVisibility(View.GONE);
             arrow.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void highlight() {
+        title.setTypeface(ResourcesCompat.getFont(getContext(), R.font.font_semibold));
+        title.setTextColor(ContextCompat.getColor(getContext(), R.color.azure));
+    }
+
+    public void unhighlight() {
+        title.setTypeface(ResourcesCompat.getFont(getContext(), R.font.font_regular));
+        title.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
     }
 }
 

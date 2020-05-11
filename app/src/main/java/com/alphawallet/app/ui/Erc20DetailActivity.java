@@ -142,6 +142,16 @@ public class Erc20DetailActivity extends BaseActivity implements StandardFunctio
         {
             functionBar = findViewById(R.id.layoutButtons);
             functionBar.setupFunctions(this, viewModel.getAssetDefinitionService(), token, null);
+
+            // For testing only
+            if (token.isEthereum()) {
+                functionBar.setSecondaryButtonText(R.string.button_buy);
+                functionBar.setSecondaryButtonClickListener(v -> {
+                    Intent intent = new Intent(this, BuyEthereumActivity.class);
+                    intent.putExtra("token", token);
+                    startActivity(intent);
+                });
+            }
             functionBar.revealButtons();
         }
     }

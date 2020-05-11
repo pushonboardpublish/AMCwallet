@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/layout_rate"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/background_divider_top_bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/font_semibold"
+            android:text="Buy With"
+            android:textAllCaps="true"
+            android:textColor="@color/dove"
+            android:textSize="@dimen/sp15" />
+
+        <TextView
+            android:id="@+id/buy_rate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/font_regular"
+            android:gravity="end"
+            android:text="Rate: 1 ETH = 100.55 USD"
+            android:textColor="@color/dove"
+            android:textSize="@dimen/sp15" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_rate"
+        android:layout_marginTop="37dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingRight="@dimen/dp16">
+
+        <ImageView
+            android:id="@+id/currency_flag"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_flags_usa" />
+
+        <TextView
+            android:id="@+id/currency_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp7"
+            android:layout_marginEnd="@dimen/dp10"
+            android:layout_toEndOf="@id/currency_flag"
+            android:drawableEnd="@drawable/ic_expand_more"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/font_regular"
+            android:text="USD"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp36" />
+
+        <EditText
+            android:id="@+id/amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/currency_text"
+            android:background="@null"
+            android:fontFamily="@font/font_regular"
+            android:hint="0.00"
+            android:inputType="numberDecimal"
+            android:textAlignment="textEnd"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp36" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_estimate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_input"
+        android:background="@drawable/background_bottom_border"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp16"
+        android:paddingTop="@dimen/dp12"
+        android:paddingRight="@dimen/dp16"
+        android:paddingBottom="@dimen/dp25">
+
+        <TextView
+            android:id="@+id/receive_estimate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/font_regular"
+            android:text="Receive 4.5231 ETH"
+            android:textColor="@color/dove"
+            android:textSize="@dimen/sp15" />
+
+        <TextView
+            android:id="@+id/fee"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/font_regular"
+            android:gravity="end"
+            android:text="Fee: 20 USD"
+            android:textColor="@color/dove"
+            android:textSize="@dimen/sp15" />
+    </LinearLayout>
+
+    <com.alphawallet.app.widget.SettingsItemView
+        android:id="@+id/setting_payment_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_estimate"
+        app:settingIcon="-1"
+        app:settingTitle="@string/select_payment_method"
+        app:settingType="default" />
+
+    <com.alphawallet.app.widget.FunctionButtonBar
+        android:id="@+id/layoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

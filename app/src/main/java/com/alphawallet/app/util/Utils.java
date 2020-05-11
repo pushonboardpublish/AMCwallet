@@ -10,6 +10,7 @@ import android.webkit.URLUtil;
 
 import com.alphawallet.app.C;
 import com.alphawallet.app.R;
+import com.alphawallet.app.entity.CurrencyItem;
 import com.alphawallet.app.repository.EthereumNetworkRepository;
 
 import org.web3j.crypto.WalletUtils;
@@ -322,5 +323,26 @@ public class Utils {
         String lastSix = address.substring(address.length()-4);
         StringBuilder formatted = new StringBuilder(result);
         return formatted.append(firstSix).append("...").append(lastSix).toString().toLowerCase();
+    }
+
+    public static int getFlagIconRes(String currencyCode) {
+        switch (currencyCode) {
+            case "USD":
+                return R.drawable.ic_flags_usa;
+            case "EUR":
+                return R.drawable.ic_flags_euro;
+            case "GBP":
+                return R.drawable.ic_flags_uk;
+            case "AUD":
+                return R.drawable.ic_flags_australia;
+            case "CNY":
+                return R.drawable.ic_flags_china;
+            case "INR":
+                return R.drawable.ic_flags_india;
+            case "SGD":
+                return R.drawable.ic_flag_sgd;
+            default:
+                return -1;
+        }
     }
 }

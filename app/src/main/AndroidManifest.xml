@@ -271,6 +271,18 @@
             android:label="Advanced Settings" />
 
         <activity
+            android:name=".ui.BuyEthereumActivity"
+            android:label="Buy Ethereum" />
+
+        <activity
+            android:name=".ui.SelectPaymentMethodActivity"
+            android:label="Select Payment Method" />
+
+        <activity
+            android:name=".ui.WyreSplashActivity"
+            android:label="About Wyre" />
+
+        <activity
             android:name=".ui.StaticViewer"
             android:label="View Text" />
     </application>

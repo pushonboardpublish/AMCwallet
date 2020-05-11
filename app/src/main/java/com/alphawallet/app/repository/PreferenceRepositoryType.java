@@ -1,6 +1,7 @@
 package com.alphawallet.app.repository;
 
 import com.alphawallet.app.entity.CurrencyItem;
+import com.alphawallet.app.entity.PaymentMethodItem;
 
 public interface PreferenceRepositoryType {
     String getCurrentWalletAddress();
@@ -37,4 +38,8 @@ public interface PreferenceRepositoryType {
     void setDefaultCurrency(CurrencyItem currency);
 
     String getDefaultCurrency();
+
+    void setDefaultPaymentMethod(PaymentMethodItem paymentMethod);
+
+    String getDefaultPaymentMethod();
 }

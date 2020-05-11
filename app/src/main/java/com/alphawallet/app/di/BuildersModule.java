@@ -4,6 +4,7 @@ import com.alphawallet.app.ui.AddTokenActivity;
 import com.alphawallet.app.ui.AdvancedSettingsActivity;
 import com.alphawallet.app.ui.AssetDisplayActivity;
 import com.alphawallet.app.ui.BackupKeyActivity;
+import com.alphawallet.app.ui.BuyEthereumActivity;
 import com.alphawallet.app.ui.ConfirmationActivity;
 import com.alphawallet.app.ui.DappBrowserFragment;
 import com.alphawallet.app.ui.Erc20DetailActivity;
@@ -157,4 +158,7 @@ public abstract class BuildersModule {
 
 	@ContributesAndroidInjector(modules = AdvancedSettingsModule.class)
 	abstract AdvancedSettingsActivity bindAdvancedSettingsActivity();
+
+	@ContributesAndroidInjector(modules = BuyEthereumModule.class)
+	abstract BuyEthereumActivity bindBuyEthereumActivity();
 }

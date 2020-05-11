@@ -597,4 +597,10 @@
     <string name="error_while_signing_transaction">Error occurred while signing transaction. Please re-import the key for this wallet.</string>
     <string name="error_not_whitelisted">Page Not Whitelisted</string>
     <string name="explain_not_whitelisted">TokenScript attempting to redirect to non-whitelisted page %1$s. If you are the owner of this site please submit PR to AlphaWallet repo to add page for whitelisting.</string>
+    <string name="button_buy">Buy</string>
+    <string name="select_payment_method">Select Payment Method*</string>
+    <string name="title_select_payment_method">Select Payment Method</string>
+    <string name="title_wyre">Wyre</string>
+    <string name="wyre_introduction">Wyre is an AlphaWallet partner which allows you to puchase cryptocurrencies using Debit Card.</string>
+    <string name="title_buy_ethereum">Buy Ethereum</string>
 </resources>

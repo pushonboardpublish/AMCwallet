@@ -22,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
-        android:layout_toStartOf="@id/layout_controls"
         android:layout_toEndOf="@id/setting_icon"
         android:orientation="vertical">
 
@@ -75,10 +74,4 @@
             android:theme="@style/SettingsItemSwitchAppearance"
             android:visibility="gone" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/mercury" />
 </RelativeLayout>

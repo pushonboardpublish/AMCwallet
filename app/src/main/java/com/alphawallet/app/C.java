@@ -10,6 +10,7 @@ public abstract class C {
     public static final int REQUEST_TRANSACTION_CALLBACK = 1012;
     public static final int UPDATE_LOCALE = 1013;
     public static final int UPDATE_CURRENCY = 1014;
+    public static final int SELECT_PAYMENT_METHOD = 1015;
 
     public static final String ETHEREUM_NETWORK_NAME = "Ethereum";
     public static final String CLASSIC_NETWORK_NAME = "Ethereum Classic";
@@ -81,6 +82,8 @@ public abstract class C {
     public static final String EXTRA_LOCALE = "LOCALE_STRING";
     public static final String EXTRA_PAGE_TITLE = "PTITLE";
     public static final String EXTRA_CURRENCY = "CURRENCY_STRING";
+    public static final String EXTRA_PAYMENT_METHOD = "PAYMENT_METHOD";
+    public static final String EXTRA_CURRENT_PAYMENT_METHOD = "CURRENT_PAYMENT_METHOD";
 
     public static final String PRUNE_ACTIVITY =
             "com.stormbird.wallet.PRUNE_ACTIVITY";
@@ -181,4 +184,10 @@ public abstract class C {
     public static final String KEY_NEEDS_BACKUP = "needsBackup";
 
     public static final String DEFAULT_CURRENCY_CODE = "USD";
+
+    // Payment Methods
+    public static final String WYRE_DEBIT_CARD = "wyre-debit-card";
+    public static final String WYRE_BANK_TRANSFER = "wyre-bank-transfer";
+    public static final String GOOGLE_PAY = "google-pay";
+    public static final String SAMSUNG_PAY = "samsung-pay";
 }
