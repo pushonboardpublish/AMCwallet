@@ -180,6 +180,8 @@ dependencies {
 
     // PW
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(":wallet-connect")
 }
 
 // WARNING WARNING WARNING
