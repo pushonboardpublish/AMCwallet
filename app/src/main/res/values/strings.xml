@@ -654,4 +654,5 @@
     <string name="dialog_send_eth_transaction">Send ETH Transaction</string>
     <string name="message_reject_request">Rejected by the user</string>
     <string name="dialog_title_disconnect_session">Disconnect Session</string>
+    <string name="message_authentication_failed">Authentication failed</string>
 </resources>

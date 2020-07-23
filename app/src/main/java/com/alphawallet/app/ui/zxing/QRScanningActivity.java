@@ -205,6 +205,8 @@ public class QRScanningActivity extends BaseActivity implements OnQRCodeScannedL
         Intent intent = new Intent(this, WalletConnectActivity.class);
         intent.putExtra("qrCode", qrCode);
         startActivity(intent);
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
