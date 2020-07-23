@@ -19,6 +19,7 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'realm-android'
+apply plugin: 'kotlin-android'
 
 repositories {
     maven {
@@ -180,6 +181,8 @@ dependencies {
 
     // PW
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'com.github.salomonbrys.kotson:kotson:2.5.0'
 }
 
 // WARNING WARNING WARNING
