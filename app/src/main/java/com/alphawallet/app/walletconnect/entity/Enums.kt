@@ -1,6 +1,13 @@
-package com.alphawallet.walletconnect.models
+package com.alphawallet.app.walletconnect.entity
 
 import com.google.gson.annotations.SerializedName
+
+enum class MessageType {
+    @SerializedName("pub")
+    PUB,
+    @SerializedName("sub")
+    SUB
+}
 
 enum class WCMethod {
     @SerializedName("wc_sessionRequest")
@@ -24,15 +31,6 @@ enum class WCMethod {
     @SerializedName("eth_sendTransaction")
     ETH_SEND_TRANSACTION,
 
-    @SerializedName("bnb_sign")
-    BNB_SIGN,
-
-    @SerializedName("bnb_tx_confirmation")
-    BNB_TRANSACTION_CONFIRM,
-
     @SerializedName("get_accounts")
     GET_ACCOUNTS,
-
-    @SerializedName("trust_signTransaction")
-    SIGN_TRANSACTION;
 }

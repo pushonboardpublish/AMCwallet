@@ -20,11 +20,11 @@ import com.alphawallet.app.viewmodel.WalletConnectViewModel;
 import com.alphawallet.app.viewmodel.WalletConnectViewModelFactory;
 import com.alphawallet.app.web3.entity.Message;
 import com.alphawallet.app.widget.FunctionButtonBar;
-import com.alphawallet.walletconnect.WCClient;
-import com.alphawallet.walletconnect.models.WCPeerMeta;
-import com.alphawallet.walletconnect.models.ethereum.WCEthereumSignMessage;
-import com.alphawallet.walletconnect.models.ethereum.WCEthereumTransaction;
-import com.alphawallet.walletconnect.models.session.WCSession;
+import com.alphawallet.app.walletconnect.WCClient;
+import com.alphawallet.app.walletconnect.entity.WCPeerMeta;
+import com.alphawallet.app.walletconnect.entity.WCEthereumSignMessage;
+import com.alphawallet.app.walletconnect.entity.WCEthereumTransaction;
+import com.alphawallet.app.walletconnect.WCSession;
 import com.bumptech.glide.Glide;
 import com.google.gson.GsonBuilder;
 
@@ -226,6 +226,7 @@ public class WalletConnectActivity extends BaseActivity {
                     client.rejectSession(getString(R.string.message_reject_request));
                     finish();
                 })
+                .setCancelable(false)
                 .create();
         dialog.show();
     }
@@ -240,6 +241,7 @@ public class WalletConnectActivity extends BaseActivity {
                 .setNegativeButton(R.string.action_cancel, (d, w) -> {
                     client.rejectRequest(id, getString(R.string.message_reject_request));
                 })
+                .setCancelable(false)
                 .create();
         dialog.show();
     }
@@ -254,6 +256,7 @@ public class WalletConnectActivity extends BaseActivity {
                 .setNegativeButton(R.string.action_cancel, (d, w) -> {
                     client.rejectRequest(id, getString(R.string.message_reject_request));
                 })
+                .setCancelable(false)
                 .create();
         dialog.show();
     }
@@ -268,6 +271,7 @@ public class WalletConnectActivity extends BaseActivity {
                 .setNegativeButton(R.string.action_cancel, (d, w) -> {
                     client.rejectRequest(id, getString(R.string.message_reject_request));
                 })
+                .setCancelable(false)
                 .create();
         dialog.show();
     }
@@ -279,6 +283,7 @@ public class WalletConnectActivity extends BaseActivity {
                 .setNeutralButton(R.string.try_again, (d, w) -> {
                     finish();
                 })
+                .setCancelable(false)
                 .create();
         dialog.show();
     }
@@ -393,6 +398,7 @@ public class WalletConnectActivity extends BaseActivity {
                 .setNegativeButton(R.string.action_cancel, (d, w) -> {
                     d.dismiss();
                 })
+                .setCancelable(false)
                 .create();
         dialog.show();
     }

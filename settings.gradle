@@ -1,1 +1,1 @@
-include ':app', ':lib', ':dmz', ':util', ':wallet-connect'
+include ':app', ':lib', ':dmz', ':util'

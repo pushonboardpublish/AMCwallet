@@ -1,19 +1,17 @@
-package com.alphawallet.walletconnect
+package com.alphawallet.app.walletconnect.util
 
-import com.alphawallet.walletconnect.exceptions.InvalidHmacException
-import com.alphawallet.walletconnect.extensions.hexStringToByteArray
-import com.alphawallet.walletconnect.extensions.toHex
-import com.alphawallet.walletconnect.models.WCEncryptionPayload
+import com.alphawallet.app.walletconnect.entity.InvalidHmacException
+import com.alphawallet.app.walletconnect.entity.WCEncryptionPayload
 import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.Mac
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-private val CIPHER_ALGORITHM = "AES/CBC/PKCS7Padding"
-private val MAC_ALGORITHM = "HmacSHA256"
-
 object WCCipher {
+    private const val CIPHER_ALGORITHM = "AES/CBC/PKCS7Padding"
+    private const val MAC_ALGORITHM = "HmacSHA256"
+
     fun encrypt(data: ByteArray, key: ByteArray): WCEncryptionPayload {
         val iv = randomBytes(16)
         val keySpec = SecretKeySpec(key, "AES")
@@ -23,25 +21,26 @@ object WCCipher {
 
         val encryptedData = cipher.doFinal(data)
         val hmac = computeHmac(
-            data = encryptedData,
-            iv = iv,
-            key = key
+                data = encryptedData,
+                iv = iv,
+                key = key
         )
 
         return WCEncryptionPayload(
-            data = encryptedData.toHex(),
-            iv = iv.toHex(),
-            hmac = hmac
+                data = encryptedData.toHexString(),
+                iv = iv.toHexString(),
+                hmac = hmac
         )
     }
 
     fun decrypt(payload: WCEncryptionPayload, key: ByteArray): ByteArray {
-        val data = payload.data.hexStringToByteArray()
-        val iv = payload.iv.hexStringToByteArray()
+        val data = payload.data.toByteArray()
+        val iv = payload.iv.toByteArray()
+
         val computedHmac = computeHmac(
-            data = data,
-            iv = iv,
-            key = key
+                data = data,
+                iv = iv,
+                key = key
         )
 
         if (computedHmac != payload.hmac.toLowerCase()) {
@@ -60,7 +59,7 @@ object WCCipher {
         val mac = Mac.getInstance(MAC_ALGORITHM)
         val payload = data + iv
         mac.init(SecretKeySpec(key, MAC_ALGORITHM))
-        return mac.doFinal(payload).toHex()
+        return mac.doFinal(payload).toHexString()
     }
 
     private fun randomBytes(size: Int): ByteArray {
@@ -71,3 +70,4 @@ object WCCipher {
         return bytes
     }
 }
+

@@ -1,20 +1,16 @@
-package com.alphawallet.walletconnect.models.session
+package com.alphawallet.app.walletconnect
 
 import android.net.Uri
 
-data class WCSession (
-    val topic: String,
-    val version: String,
-    val bridge: String,
-    val key: String
+data class WCSession(
+        val topic: String,
+        val version: String,
+        val bridge: String,
+        val key: String
 ) {
-    fun toUri(): String = "wc:${topic}@${version}?bridge=${bridge}&key=${key}"
-
     companion object {
         fun from(from: String): WCSession? {
-            if (!from.startsWith("wc:")) {
-                return null
-            }
+            if (!from.startsWith("wc:")) return null
 
             val uriString = from.replace("wc:", "wc://")
             val uri = Uri.parse(uriString)
