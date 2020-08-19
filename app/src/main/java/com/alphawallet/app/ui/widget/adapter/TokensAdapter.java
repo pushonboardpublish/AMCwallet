@@ -107,7 +107,7 @@ public class TokensAdapter extends RecyclerView.Adapter<BinderViewHolder> {
         this.onTokenClickListener = onTokenClickListener;
         this.assetService = aService;
         this.tokensService = null;
-        this.realm = tokensService.getTickerRealmInstance();
+        this.realm = null;
     }
 
     @Override
