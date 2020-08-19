@@ -11,6 +11,7 @@ import com.alphawallet.token.entity.As;
 import com.alphawallet.token.entity.Attribute;
 import com.alphawallet.token.entity.AttributeInterface;
 import com.alphawallet.token.entity.ContractAddress;
+import com.alphawallet.token.entity.EventDefinition;
 import com.alphawallet.token.entity.FunctionDefinition;
 import com.alphawallet.token.entity.MethodArg;
 import com.alphawallet.token.entity.TokenScriptResult;
@@ -30,7 +31,10 @@ import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.abi.datatypes.generated.*;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.EthCall;
+import org.web3j.protocol.core.methods.response.EthLog;
+import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.utils.Bytes;
 import org.web3j.utils.Numeric;
 
@@ -39,12 +43,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Observable;
 
+import static com.alphawallet.app.repository.TokenRepository.getWeb3jService;
 import static org.web3j.protocol.core.methods.request.Transaction.createEthCallTransaction;
 
 /**
@@ -789,7 +795,16 @@ public abstract class TokenscriptFunction
             ContractAddress useAddress = new ContractAddress(attr.event.contract.addresses.keySet().iterator().next(),
                                                              attr.event.contract.addresses.values().iterator().next().get(0));
             TransactionResult cachedResult = attrIf.getFunctionResult(useAddress, attr, tokenId); //Needs to allow for multiple tokenIds
-            return resultFromDatabase(cachedResult, attr);
+            //if the latest event result is not yet found, then find it here
+            if (TextUtils.isEmpty(cachedResult.result))
+            {
+                //try to fetch latest event result - this can happen at startup
+                return getEventResult(cachedResult, attr, tokenId, attrIf);
+            }
+            else
+            {
+                return resultFromDatabase(cachedResult, attr);
+            }
         }
         else if (attr.function == null)  // static attribute from tokenId (eg city mapping from tokenId)
         {
@@ -814,6 +829,29 @@ public abstract class TokenscriptFunction
                         .map(result -> parseFunctionResult(result, attr));    // write returned data into attribute
             }
         }
+    }
+
+    private Observable<TokenScriptResult.Attribute> getEventResult(TransactionResult txResult, Attribute attr, BigInteger tokenId, AttributeInterface attrIf)
+    {
+        //fetch the function
+        return Observable.fromCallable(() -> {
+            String walletAddress = attrIf.getWalletAddr();
+            Web3j web3j = getWeb3jService(attr.event.getEventChainId());
+            List<BigInteger> tokenIds = new ArrayList<>(Collections.singletonList(tokenId));
+            EthFilter filter = EventUtils.generateLogFilter(attr.event, tokenIds, attrIf);
+            EthLog ethLogs = web3j.ethGetLogs(filter).send();
+            //use last received log
+            if (ethLogs.getLogs().size() > 0)
+            {
+                EthLog.LogResult ethLog = ethLogs.getLogs().get(ethLogs.getLogs().size() - 1);
+                String selectVal = EventUtils.getSelectVal(attr.event, ethLog);
+                txResult.result = attr.getSyntaxVal(selectVal);
+                txResult.resultTime = System.currentTimeMillis();
+                attrIf.storeAuxData(walletAddress, txResult);
+            }
+
+            return parseFunctionResult(txResult, attr);
+        });
     }
 
     private Observable<TokenScriptResult.Attribute> staticAttribute(Attribute attr, BigInteger tokenId)

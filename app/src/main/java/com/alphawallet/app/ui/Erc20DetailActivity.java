@@ -113,7 +113,7 @@ public class Erc20DetailActivity extends BaseActivity implements StandardFunctio
         String tokenAddress = token.isEthereum() ? "eth" : token.getAddress();
         activityHistoryList.setupAdapter(adapter);
         activityHistoryList.startActivityListeners(viewModel.getRealmInstance(wallet), wallet,
-                token.tokenInfo.chainId, tokenAddress, HISTORY_LENGTH);
+                token, BigInteger.ZERO, HISTORY_LENGTH);
     }
 
     private void setUpTokenView()

@@ -42,6 +42,8 @@ import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 
+import static com.alphawallet.app.repository.TokensRealmSource.EVENT_CARDS;
+
 /**
  * Created by JB on 26/06/2020.
  */
@@ -134,7 +136,7 @@ public class ActivityFragment extends BaseFragment implements View.OnClickListen
             });
 
             auxRealmUpdates = realm.where(RealmAuxData.class)
-                    .endsWith("instanceKey", "-eventName")
+                    .endsWith("instanceKey", EVENT_CARDS)
                     .greaterThan("resultReceivedTime", lastUpdateTime)
                     .findAllAsync();
             auxRealmUpdates.addChangeListener(realmEvents -> {

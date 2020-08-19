@@ -57,6 +57,8 @@ public class TokensRealmSource implements TokenLocalSource {
     public static final String ADDRESS_FORMAT = "0x????????????????????????????????????????-*";
     private static final long ACTUAL_TOKEN_TICKER_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
 
+    public static final String EVENT_CARDS = "-eventName";
+
     private final RealmManager realmManager;
     private final EthereumNetworkRepositoryType ethereumNetworkRepository;
 
@@ -272,9 +274,9 @@ public class TokensRealmSource implements TokenLocalSource {
         return databaseKey(token.tokenInfo.chainId, token.tokenInfo.address);
     }
 
-    public static String eventKey(String txHash, String activityName)
+    public static String eventActivityKey(String txHash, String activityName)
     {
-        return txHash + "-" + activityName + "-eventName";
+        return txHash + "-" + activityName + EVENT_CARDS;
     }
 
     public static String eventBlockKey(int chainId, String eventAddress, String namedType, String filter)

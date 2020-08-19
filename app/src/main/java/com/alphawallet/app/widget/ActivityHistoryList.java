@@ -17,10 +17,12 @@ import com.alphawallet.app.entity.ActivityMeta;
 import com.alphawallet.app.entity.EventMeta;
 import com.alphawallet.app.entity.TransactionMeta;
 import com.alphawallet.app.entity.Wallet;
+import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.entity.RealmAuxData;
 import com.alphawallet.app.repository.entity.RealmTransaction;
 import com.alphawallet.app.ui.widget.adapter.ActivityAdapter;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +30,8 @@ import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+
+import static com.alphawallet.app.repository.TokensRealmSource.EVENT_CARDS;
 
 /**
  * Created by JB on 5/08/2020.
@@ -62,7 +66,7 @@ public class ActivityHistoryList extends LinearLayout
         recentTransactionsView.setAdapter(adapter);
     }
 
-    public void startActivityListeners(Realm realm, Wallet wallet, int chainId, final String tokenAddress, final int historyCount)
+    public void startActivityListeners(Realm realm, Wallet wallet, Token token, BigInteger tokenId, final int historyCount)
     {
         this.realm = realm;
 
@@ -72,14 +76,14 @@ public class ActivityHistoryList extends LinearLayout
         if (realmTransactionUpdates != null) realmTransactionUpdates.removeAllChangeListeners();
         if (auxRealmUpdates != null) auxRealmUpdates.removeAllChangeListeners();
 
-        if (tokenAddress.equals("eth"))
+        if (token.isEthereum())
         {
-            realmTransactionUpdates = getEthListener(chainId, wallet, historyCount);
+            realmTransactionUpdates = getEthListener(token.tokenInfo.chainId, wallet, historyCount);
             initViews(true);
         }
         else
         {
-            realmTransactionUpdates = getContractListener(chainId, wallet, tokenAddress, historyCount);
+            realmTransactionUpdates = getContractListener(token.tokenInfo.chainId, wallet, token.getAddress(), historyCount);
             initViews(false);
         }
 
@@ -95,13 +99,7 @@ public class ActivityHistoryList extends LinearLayout
             addItems(metas);
         });
 
-        auxRealmUpdates = realm.where(RealmAuxData.class)
-                .endsWith("instanceKey", "-eventName")
-                .sort("resultTime", Sort.DESCENDING)
-                .equalTo("chainId", chainId)
-                .equalTo("tokenAddress", tokenAddress)
-                .limit(historyCount)
-                .findAllAsync();
+        auxRealmUpdates = getEventListener(token, tokenId, historyCount);
         auxRealmUpdates.addChangeListener(realmEvents -> {
             List<ActivityMeta> metas = new ArrayList<>();
             for (RealmAuxData item : realmEvents)
@@ -112,6 +110,19 @@ public class ActivityHistoryList extends LinearLayout
 
             addItems(metas);
         });
+    }
+
+    private RealmResults<RealmAuxData> getEventListener(Token token, BigInteger tokenId, int historyCount)
+    {
+        String tokenIdHex = tokenId.toString(16);
+        return realm.where(RealmAuxData.class)
+                .endsWith("instanceKey", EVENT_CARDS)
+                .sort("resultTime", Sort.DESCENDING)
+                .equalTo("chainId", token.tokenInfo.chainId)
+                .beginGroup().equalTo("tokenId", "0").or().equalTo("tokenId", tokenIdHex).endGroup()
+                .equalTo("tokenAddress", token.getAddress())
+                .limit(historyCount)
+                .findAllAsync();
     }
 
     private void initViews(boolean isEth)

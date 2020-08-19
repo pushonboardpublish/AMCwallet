@@ -18,6 +18,7 @@ import com.alphawallet.app.service.TokensService;
 import com.alphawallet.app.ui.TokenActivity;
 import com.alphawallet.token.entity.SigReturnType;
 import com.alphawallet.token.entity.XMLDsigDescriptor;
+import com.alphawallet.token.tools.TokenDefinition;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -109,8 +110,8 @@ public class Erc20DetailViewModel extends BaseViewModel {
                 .isDisposed();
     }
 
-    private void handleFilename(String newFile)
+    private void handleFilename(TokenDefinition td)
     {
-        if (!TextUtils.isEmpty(newFile)) newScriptFound.postValue(true);
+        if (!TextUtils.isEmpty(td.holdingToken)) newScriptFound.postValue(true);
     }
 }

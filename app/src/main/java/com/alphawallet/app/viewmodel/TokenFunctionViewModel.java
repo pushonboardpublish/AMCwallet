@@ -58,6 +58,7 @@ import com.alphawallet.token.entity.TicketRange;
 import com.alphawallet.token.entity.TokenScriptResult;
 import com.alphawallet.token.entity.TokenscriptElement;
 import com.alphawallet.token.entity.XMLDsigDescriptor;
+import com.alphawallet.token.tools.TokenDefinition;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -455,13 +456,13 @@ public class TokenFunctionViewModel extends BaseViewModel
         assetDefinitionService.checkServerForScript(token.tokenInfo.chainId, token.getAddress())
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.single())
-                .subscribe(this::handleFilename, this::onError)
+                .subscribe(this::handleDefinition, this::onError)
                 .isDisposed();
     }
 
-    private void handleFilename(String newFile)
+    private void handleDefinition(TokenDefinition td)
     {
-        if (!TextUtils.isEmpty(newFile)) newScriptFound.postValue(true);
+        if (!TextUtils.isEmpty(td.holdingToken)) newScriptFound.postValue(true);
     }
 
     public boolean isAuthorizeToFunction()

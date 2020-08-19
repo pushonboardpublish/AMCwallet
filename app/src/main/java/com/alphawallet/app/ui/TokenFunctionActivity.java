@@ -147,11 +147,11 @@ public class TokenFunctionActivity extends BaseActivity implements StandardFunct
 
         activityHistoryList.setupAdapter(adapter);
         activityHistoryList.startActivityListeners(viewModel.getRealmInstance(wallet), wallet,
-                token.tokenInfo.chainId, token.getAddress(), HISTORY_LENGTH);
+                token, idList.get(0), HISTORY_LENGTH);
 
         //TODO: add live event listener to update view as new events occur
 //        String dbKey = databaseKey(token.tokenInfo.chainId, token.tokenInfo.address.toLowerCase());
-//        realmAuxUpdates = realm.where(RealmAuxData.class).endsWith("instanceKey", "-eventName")
+//        realmAuxUpdates = realm.where(RealmAuxData.class).endsWith("instanceKey", EVENT_CARDS)
 //                .equalTo("chainId", token.tokenInfo.chainId)
 //                .equalTo("tokenId", token.tokenInfo.address.toLowerCase()).findAllAsync();
 //        realmAuxUpdates.addChangeListener(realmAux -> {

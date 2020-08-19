@@ -83,7 +83,7 @@ public class EventHolder extends BinderViewHolder<EventMeta> implements View.OnC
         fromTokenView = false;
         String walletAddress = addition.getString(DEFAULT_ADDRESS_ADDITIONAL);
         //pull event details from DB
-        eventKey = TokensRealmSource.eventKey(data.hash, data.eventName);
+        eventKey = TokensRealmSource.eventActivityKey(data.hash, data.eventName);
         tokenId = BigInteger.ZERO;
 
         RealmAuxData eventData = fetchTransactionsInteract.fetchEvent(walletAddress, eventKey);

@@ -31,6 +31,7 @@ import java.util.List;
 
 import static com.alphawallet.app.entity.TransactionOperation.ERC875_CONTRACT_TYPE;
 import static com.alphawallet.app.entity.TransactionOperation.NORMAL_CONTRACT_TYPE;
+import static com.alphawallet.app.repository.TokensRealmSource.EVENT_CARDS;
 
 public class TransactionsRealmCache implements TransactionLocalSource {
 
@@ -131,7 +132,7 @@ public class TransactionsRealmCache implements TransactionLocalSource {
             try (Realm instance = realmManager.getRealmInstance(wallet.address))
             {
                 RealmResults<RealmAuxData> evs = instance.where(RealmAuxData.class)
-                        .endsWith("instanceKey", "-eventName")
+                        .endsWith("instanceKey", EVENT_CARDS)
                         .findAll();
                 Log.d(TAG, "Found " + evs.size() + " TX Results");
                 for (RealmAuxData item : evs)

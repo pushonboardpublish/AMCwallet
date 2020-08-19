@@ -100,9 +100,6 @@ public class TokenActivity extends BaseActivity implements PageReadyCallback, St
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_token_activity);
 
-        viewModel = ViewModelProviders.of(this, tokenFunctionViewModelFactory)
-                .get(TokenFunctionViewModel.class);
-
         eventKey = getIntent().getStringExtra(C.EXTRA_ACTION_NAME);
         transactionHash = getIntent().getStringExtra(C.EXTRA_TXHASH);
         isFromTokenHistory = getIntent().getBooleanExtra(C.EXTRA_STATE, false);
@@ -115,13 +112,33 @@ public class TokenActivity extends BaseActivity implements PageReadyCallback, St
 
         findViewById(R.id.layout_select_ticket).setVisibility(View.GONE);
 
-        viewModel.getCurrentWallet();
-        viewModel.walletUpdate().observe(this, this::onWallet);
+        tokenId = BigInteger.ZERO;
+    }
 
+    private void setupViewModel()
+    {
+        viewModel = ViewModelProviders.of(this, tokenFunctionViewModelFactory)
+                .get(TokenFunctionViewModel.class);
+        viewModel.walletUpdate().observe(this, this::onWallet);
+    }
+
+    private void initViews()
+    {
         tokenView = findViewById(R.id.web3_tokenview);
         functionBar = findViewById(R.id.layoutButtons);
+    }
 
-        tokenId = BigInteger.ZERO;
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        initViews();
+        if (viewModel == null)
+        {
+            setupViewModel();
+        }
+
+        viewModel.getCurrentWallet();
     }
 
     @Override
